@@ -1,155 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Don't Ask to Ask - Just Ask Your Question</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Learn why you should just ask your question instead of asking to ask. Improve communication in online communities and get faster answers."
+    />
+    <meta
+      name="keywords"
+      content="communication, etiquette, online communities, asking questions, efficiency, dev, help, dontasktoask, ask, nohello"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta
+      property="og:title"
+      content="Don't Ask to Ask - Just Ask Your Question"
+    />
+    <meta property="og:description" content="Please don't ask to ask 🙏" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="" />
+    <meta
+      property="twitter:title"
+      content="Don't Ask to Ask - Just Ask Your Question"
+    />
+    <meta property="twitter:description" content="Please don't ask to ask 🙏" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --primary-color: #4a90e2;
-            --secondary-color: #f39c12;
-            --example-bg-color: #f0f0f0;
-        }
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #333333;
+        --primary-color: #4a90e2;
+        --secondary-color: #f39c12;
+        --example-bg-color: #f0f0f0;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s, color 0.3s;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        transition: background-color 0.3s, color 0.3s;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+      .hero {
+        text-align: center;
+        margin-bottom: 40px;
+      }
 
-        .name {
-            font-size: 72px;
-            margin-bottom: 0;
-        }
+      .name {
+        font-size: 72px;
+        margin-bottom: 0;
+      }
 
-        .subtitle {
-            font-size: 24px;
-            color: #777;
-        }
+      #strike {
+        text-decoration: line-through;
+        color: var(--secondary-color);
+      }
 
-        .lead {
-            font-size: 28px;
-            margin-top: 20px;
-        }
+      .subtitle {
+        font-size: 24px;
+        color: #777;
+      }
 
+      .lead {
+        font-size: 28px;
+        margin-top: 20px;
+      }
+
+      .sections {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 40px;
+      }
+
+      .section {
+        width: 100%;
+      }
+
+      .section-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .example {
+        background-color: var(--example-bg-color);
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      .slack-message {
+        margin-bottom: 10px;
+      }
+
+      .slack-user {
+        font-weight: bold;
+      }
+
+      .footer {
+        background-color: var(--example-bg-color);
+        padding: 20px;
+        text-align: center;
+        font-size: 14px;
+      }
+      .dark-mode {
+        --bg-color: #333333;
+        --text-color: #ffffff;
+        --primary-color: #4a90e2;
+        --secondary-color: #ffa500;
+        --example-bg-color: #444444;
+      }
+
+      @media (min-width: 768px) {
         .sections {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            margin-bottom: 40px;
+          flex-direction: row;
         }
 
         .section {
-            width: 100%;
+          width: 48%;
         }
+      }
 
-        .section-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .example {
-            background-color: var(--example-bg-color);
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .slack-message {
-            margin-bottom: 10px;
-        }
-
-        .slack-user {
-            font-weight: bold;
-        }
-
-        .footer {
-            background-color: var(--example-bg-color);
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .dark-mode {
-            --bg-color: #333333;
-            --text-color: #ffffff;
-            --primary-color: #4a90e2;
-            --secondary-color: #ffa500;
-            --example-bg-color: #444444;
-        }
-
-        @media (min-width: 768px) {
-            .sections {
-                flex-direction: row;
-            }
-
-            .section {
-                width: 48%;
-            }
-        }
-
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
+      a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="hero">
-            <h1 class="name">don't ask to ask</h1>
-            <span class="subtitle">please, don't ask to ask, just ask</span>
-            <h2 class="lead">Imagine calling someone on the phone and saying "Hi, can I ask you a question?" and then hanging up...</h2>
-        </div>
-        <div class="sections">
-            <div class="section">
-                <h2 class="section-title">❌ Don't do this</h2>
-                <div class="example">
-                    <div class="slack-message">
-                        <span class="slack-user">User1:</span><br>
-                        Any Java experts around?
-                    </div>
-                    <div class="slack-message">
-                        <span class="slack-user">User2:</span><br>
-                        I know some Java. What's your question?
-                    </div>
-                </div>
+      <div class="hero">
+        <h1 class="name">don't <span id="strike"></span></h1>
+        <span class="subtitle">please, don't ask to ask, just ask</span>
+        <h2 class="lead">
+          Imagine calling someone on the phone and saying "Hi, can I ask you a
+          question?" and then hanging up...
+        </h2>
+      </div>
+      <div class="sections">
+        <div class="section">
+          <h2 class="section-title">❌ Don't do this</h2>
+          <div class="example">
+            <div class="slack-message">
+              <span class="slack-user">User1:</span><br />
+              Any Java experts around?
             </div>
-            <div class="section">
-                <h2 class="section-title">✅ Do this instead</h2>
-                <div class="example">
-                    <div class="slack-message">
-                        <span class="slack-user">User1:</span><br>
-                        I'm getting a NullPointerException when trying to autowire a service in my Spring Boot application. Here's the relevant code and stack trace: [code and error details]
-                    </div>
-                </div>
+            <div class="slack-message">
+              <span class="slack-user">User2:</span><br />
+              I know some Java. What's your question?
             </div>
+          </div>
         </div>
+        <div class="section">
+          <h2 class="section-title">✅ Do this instead</h2>
+          <div class="example">
+            <div class="slack-message">
+              <span class="slack-user">User1:</span><br />
+              I'm getting a NullPointerException when trying to autowire a
+              service in my Spring Boot application. Here's the relevant code
+              and stack trace: [code and error details]
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <footer class="footer">
-        <p>Inspired by <a href="https://dontasktoask.com/">Don't Ask To Ask</a> and <a href="https://nohello.net/">No Hello</a></p>
+      <p>
+        Inspired by <a href="https://dontasktoask.com/">Don't Ask To Ask</a> and
+        <a href="https://nohello.net/">No Hello</a>
+      </p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.body.classList.add('dark-mode');
-        }
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.body.classList.add("dark-mode");
+      }
+
+      new Typed("#strike", {
+        strings: [
+          "ask to ask",
+          "wait to ask",
+          "check if you can ask",
+          "ask if you can ask",
+          "be stupid",
+          "be annoying",
+          "be inefficient",
+          "be a waste of time",
+          "ask to ask",
+          "be useless",
+        ],
+        typeSpeed: 80,
+        backSpeed: 50,
+        loop: true,
+      });
     </script>
-</body>
+  </body>
 </html>
