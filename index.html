@@ -38,10 +38,51 @@
             margin-top: 20px;
         }
 
+        .sections {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .example {
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .slack-message {
+            margin-bottom: 10px;
+        }
+
+        .slack-user {
+            font-weight: bold;
+        }
+
         .footer {
             padding: 20px;
             text-align: center;
             font-size: 14px;
+        }
+
+        @media (min-width: 768px) {
+            .sections {
+                flex-direction: row;
+            }
+
+            .section {
+                width: 48%;
+            }
         }
     </style>
 </head>
@@ -52,6 +93,33 @@
             <span class="subtitle">please, don't ask to ask, just ask</span>
             <h2 class="lead">Imagine calling someone on the phone and saying "Hi, can I ask you a question?" and then hanging up...</h2>
         </div>
+        <div class="sections">
+            <div class="section">
+                <h2 class="section-title">❌ Don't do this</h2>
+                <div class="example">
+                    <div class="slack-message">
+                        <span class="slack-user">User1:</span><br>
+                        Any Java experts around?
+                    </div>
+                    <div class="slack-message">
+                        <span class="slack-user">User2:</span><br>
+                        I know some Java. What's your question?
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">✅ Do this instead</h2>
+                <div class="example">
+                    <div class="slack-message">
+                        <span class="slack-user">User1:</span><br>
+                        I'm getting a NullPointerException when trying to autowire a service in my Spring Boot application. Here's the relevant code and stack trace: [code and error details]
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <footer class="footer">
+        <p>Inspired by <a href="https://dontasktoask.com/">Don't Ask To Ask</a> and <a href="https://nohello.net/">No Hello</a></p>
+    </footer>
 </body>
 </html>
