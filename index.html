@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Don't Ask to Ask - Just Ask Your Question</title>
-
     <!-- SEO Meta Tags -->
     <meta
       name="description"
@@ -17,21 +16,32 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="" />
+    <meta property="og:url" content="https://donotasktoask.pages.dev/" />
     <meta
       property="og:title"
       content="Don't Ask to Ask - Just Ask Your Question"
     />
     <meta property="og:description" content="Please don't ask to ask 🙏" />
+    <meta
+      property="og:image"
+      content="https://donotasktoask.pages.dev/img/card.png"
+    />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="" />
+    <meta
+      property="twitter:url"
+      content="https://donotasktoask.pages.dev/"
+    />
     <meta
       property="twitter:title"
       content="Don't Ask to Ask - Just Ask Your Question"
     />
     <meta property="twitter:description" content="Please don't ask to ask 🙏" />
+    <meta
+      property="twitter:image"
+      content="https://donotasktoask.pages.dev/img/card.png"
+    />
 
     <!-- Favicon -->
     <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
@@ -53,12 +63,16 @@
         margin: 0;
         padding: 0;
         transition: background-color 0.3s, color 0.3s;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
       .container {
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
+        flex: 1;
       }
 
       .hero {
@@ -117,12 +131,18 @@
         font-weight: bold;
       }
 
+      .slack-time {
+        color: #777;
+        font-size: 0.9em;
+      }
+
       .footer {
         background-color: var(--example-bg-color);
         padding: 20px;
         text-align: center;
         font-size: 14px;
       }
+
       .dark-mode {
         --bg-color: #333333;
         --text-color: #ffffff;
@@ -147,40 +167,22 @@
       }
     </style>
   </head>
+
   <body>
     <div class="container">
       <div class="hero">
         <h1 class="name">don't <span id="strike"></span></h1>
-        <span class="subtitle">please, don't ask to ask, just ask</span>
-        <h2 class="lead">
-          Imagine calling someone on the phone and saying "Hi, can I ask you a
-          question?" and then hanging up...
-        </h2>
+        <span class="subtitle" id="subtitle"></span>
+        <h2 class="lead" id="lead"></h2>
       </div>
       <div class="sections">
         <div class="section">
-          <h2 class="section-title">❌ Don't do this</h2>
-          <div class="example">
-            <div class="slack-message">
-              <span class="slack-user">User1:</span><br />
-              Any Java experts around?
-            </div>
-            <div class="slack-message">
-              <span class="slack-user">User2:</span><br />
-              I know some Java. What's your question?
-            </div>
-          </div>
+          <h2 class="section-title" id="badExampleTitle"></h2>
+          <div class="example" id="badExample"></div>
         </div>
         <div class="section">
-          <h2 class="section-title">✅ Do this instead</h2>
-          <div class="example">
-            <div class="slack-message">
-              <span class="slack-user">User1:</span><br />
-              I'm getting a NullPointerException when trying to autowire a
-              service in my Spring Boot application. Here's the relevant code
-              and stack trace: [code and error details]
-            </div>
-          </div>
+          <h2 class="section-title" id="goodExampleTitle"></h2>
+          <div class="example" id="goodExample"></div>
         </div>
       </div>
     </div>
@@ -192,12 +194,269 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script>
+      // Localization
+
+      const languages = [
+        {
+          code: "en",
+          language: "English",
+          title: "Don't Ask to Ask - Just Ask Your Question",
+          subtitle: "please, don't ask to ask, just ask",
+          lead: 'Imagine calling someone on the phone and saying "Hi, can I ask you a question?" and then hanging up...',
+          badExampleTitle: "❌ Don't do this",
+          goodExampleTitle: "✅ Do this instead",
+          badChat: [
+            "Any Java experts around?",
+            "I know some Java. What's your question?",
+            "I have a problem with Spring Boot. Can you help?",
+            "Maybe. What's the specific issue?",
+            "I'm getting a NullPointerException...",
+          ],
+          goodChat: [
+            "I'm getting a NullPointerException when trying to autowire a service in my Spring Boot application. Here's the relevant code and stack trace: [code and error details]",
+            "It looks like your service might not be properly annotated. Try adding @Service to your class declaration.",
+          ],
+        },
+        {
+          code: "fr",
+          language: "Français",
+          title: "Ne demandez pas pour demander",
+          subtitle:
+            "s'il vous plaît, ne demandez pas si vous pouvez poser une question, posez simplement la question",
+          lead: 'Imaginez appeler quelqu\'un au téléphone et dire "Salut, puis-je vous poser une question ?" puis raccrocher...',
+          badExampleTitle: "❌ Ne faites pas ça",
+          goodExampleTitle: "✅ Faites plutôt ça",
+          badChat: [
+            "Salut, y a-t-il des experts en Java ici ?",
+            "Je connais un peu Java. Quelle est ta question ?",
+            "J'ai un problème avec Spring Boot. Pouvez-vous m'aider ?",
+            "Peut-être. Quel est le problème spécifique ?",
+            "J'obtiens une NullPointerException...",
+          ],
+          goodChat: [
+            "J'obtiens une NullPointerException lors de la tentative d'autowire d'un service dans mon application Spring Boot. Voici le code pertinent et la stack trace : [détails du code et de l'erreur]",
+            "Il semble que votre service ne soit pas correctement annoté. Essayez d'ajouter @Service à la déclaration de votre classe.",
+          ],
+        },
+        {
+          code: "es",
+          language: "Español",
+          title: "No preguntes para preguntar",
+          subtitle:
+            "por favor, no preguntes para preguntar, simplemente pregunta",
+          lead: 'Imagina llamar a alguien por teléfono y decir "Hola, ¿puedo hacerte una pregunta?" y luego colgar...',
+          badExampleTitle: "❌ No hagas esto",
+          goodExampleTitle: "✅ Haz esto en su lugar",
+          badChat: [
+            "¿Hay expertos en Java por aquí?",
+            "Sé algo de Java. ¿Cuál es tu pregunta?",
+            "Tengo un problema con Spring Boot. ¿Puedes ayudarme?",
+            "Quizás. ¿Cuál es el problema específico?",
+            "Estoy obteniendo una NullPointerException...",
+          ],
+          goodChat: [
+            "Estoy obteniendo una NullPointerException al intentar autowire un servicio en mi aplicación Spring Boot. Aquí está el código relevante y la traza de la pila: [detalles del código y del error]",
+            "Parece que su servicio podría no estar correctamente anotado. Intente agregar @Service a la declaración de su clase.",
+          ],
+        },
+        {
+          code: "de",
+          language: "Deutsch",
+          title: "Fragen Sie nicht, um zu fragen",
+          subtitle:
+            "bitte fragen Sie nicht, ob Sie eine Frage stellen können, stellen Sie einfach die Frage",
+          lead: 'Stellen Sie sich vor, Sie rufen jemanden an und sagen "Hallo, kann ich Ihnen eine Frage stellen?" und legen dann auf...',
+          badExampleTitle: "❌ Machen Sie das nicht",
+          goodExampleTitle: "✅ Machen Sie stattdessen das",
+          badChat: [
+            "Gibt es hier Java-Experten?",
+            "Ich kenne etwas Java. Was ist deine Frage?",
+            "Ich habe ein Problem mit Spring Boot. Kannst du helfen?",
+            "Vielleicht. Was ist das spezifische Problem?",
+            "Ich bekomme eine NullPointerException...",
+          ],
+          goodChat: [
+            "Ich bekomme eine NullPointerException, wenn ich versuche, einen Service in meiner Spring Boot-Anwendung zu autowiren. Hier ist der relevante Code und der Stack-Trace: [Code- und Fehlerdetails]",
+            "Es scheint, dass Ihr Service möglicherweise nicht ordnungsgemäß annotiert ist. Versuchen Sie, @Service zu Ihrer Klassendeklaration hinzuzufügen.",
+          ],
+        },
+        {
+          code: "it",
+          language: "Italiano",
+          title: "Non chiedere di chiedere",
+          subtitle:
+            "per favore, non chiedere di chiedere, chiedi semplicemente",
+          lead: 'Immagina di chiamare qualcuno al telefono e dire "Ciao, posso farti una domanda?" e poi riattaccare...',
+          badExampleTitle: "❌ Non fare questo",
+          goodExampleTitle: "✅ Fai invece questo",
+          badChat: [
+            "Ci sono esperti di Java qui?",
+            "Conosco un po' di Java. Qual è la tua domanda?",
+            "Ho un problema con Spring Boot. Puoi aiutarmi?",
+            "Forse. Qual è il problema specifico?",
+            "Sto ricevendo una NullPointerException...",
+          ],
+          goodChat: [
+            "Sto ricevendo una NullPointerException quando cerco di autowire un servizio nella mia applicazione Spring Boot. Ecco il codice rilevante e la traccia dello stack: [dettagli del codice e dell'errore]",
+            "Sembra che il tuo servizio potrebbe non essere correttamente annotato. Prova ad aggiungere @Service alla dichiarazione della tua classe.",
+          ],
+        },
+      ];
+
+      // Names
+
+      const names = [
+        "Alice",
+        "Bob",
+        "Charlie",
+        "David",
+        "Eve",
+        "Frank",
+        "Grace",
+        "Heidi",
+        "Ivan",
+        "Judy",
+        "Kevin",
+        "Linda",
+        "Mallory",
+        "Nancy",
+        "Oscar",
+        "Peggy",
+        "Quentin",
+        "Romeo",
+        "Sue",
+        "Trent",
+        "Ursula",
+        "Victor",
+        "Wendy",
+        "Xander",
+        "Yvonne",
+        "Zelda",
+        "Adam",
+        "Brenda",
+        "Carl",
+        "Diane",
+        "Ed",
+        "Fiona",
+        "George",
+        "Helen",
+        "Ike",
+        "Jenny",
+        "Karl",
+        "Linda",
+        "Mike",
+        "Nora",
+        "Owen",
+        "Pam",
+        "Quincy",
+        "Ruth",
+        "Steve",
+        "Tina",
+        "Ulysses",
+        "Vera",
+        "Walter",
+        "Xena",
+        "Yolanda",
+        "Zack",
+        "X Æ A-12",
+        "Jeff",
+        "Mark",
+        "Yvonne",
+        "Karl",
+        "Linus",
+      ];
+
+      const currentYear = new Date().getFullYear();
+      const specialNames = [
+        { name: "Stingy Jack", date: new Date(currentYear, 9, 31) },
+        { name: "Santa Claus", date: new Date(currentYear, 11, 25) },
+        { name: "Paul 🎂", date: new Date(currentYear, 11, 24) },
+        { name: "Cupid", date: new Date(currentYear, 2, 14) },
+      ];
+
+      let language = (navigator.language || navigator.userLanguage)
+        .substring(0, 2)
+        .toLowerCase();
+
+      function updateLanguage() {
+        const selectedLanguage =
+          languages.find((lang) => lang.code === language) || languages[0];
+        document.getElementById("subtitle").textContent =
+          selectedLanguage.subtitle;
+        document.getElementById("lead").textContent = selectedLanguage.lead;
+        document.getElementById("badExampleTitle").textContent =
+          selectedLanguage.badExampleTitle;
+        document.getElementById("goodExampleTitle").textContent =
+          selectedLanguage.goodExampleTitle;
+        document.title = selectedLanguage.title;
+
+        const badExample = document.getElementById("badExample");
+        const goodExample = document.getElementById("goodExample");
+
+        badExample.innerHTML = selectedLanguage.badChat
+          .map(
+            (message, index) => `
+                <div class="slack-message">
+                    <span class="slack-user">${
+                      index % 2 === 0 ? "User1" : "User2"
+                    }:</span>
+                    <span class="slack-time">${(index + 1) * 2}:${
+              (index + 1) * 5
+            } PM</span><br>
+                    ${message}
+                </div>
+            `
+          )
+          .join("");
+
+        goodExample.innerHTML = selectedLanguage.goodChat
+          .map(
+            (message, index) => `
+                <div class="slack-message">
+                    <span class="slack-user">${
+                      index % 2 === 0 ? "User1" : "User2"
+                    }:</span>
+                    <span class="slack-time">${(index + 1) * 2}:${
+              (index + 1) * 5
+            } PM</span><br>
+                    ${message}
+                </div>
+            `
+          )
+          .join("");
+      }
+
+      function setRandomNames() {
+        const date = new Date();
+        const today = new Date(currentYear, date.getMonth(), date.getDate());
+        const specialName = specialNames.find(
+          (name) => name.date.getTime() === today.getTime()
+        );
+
+        let randomName1 = names[Math.floor(Math.random() * names.length)];
+        if (specialName) {
+          randomName1 = specialName.name + " 🎉";
+        }
+
+        names.splice(names.indexOf(randomName1), 1);
+        let randomName2 = names[Math.floor(Math.random() * names.length)];
+
+        document.querySelectorAll(".slack-user").forEach((el, index) => {
+          el.textContent = (index % 2 === 0 ? randomName1 : randomName2) + ":";
+        });
+      }
+
+      updateLanguage();
+      setRandomNames();
+
       if (
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches
       ) {
         document.body.classList.add("dark-mode");
       }
+
+      // Type animation
 
       new Typed("#strike", {
         strings: [
